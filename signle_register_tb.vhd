@@ -42,7 +42,6 @@ ARCHITECTURE behavior OF single_register_tb IS
     COMPONENT single_register
     PORT(
          CLK : IN  std_logic;
-         RST : IN  std_logic;
          Datain : IN  std_logic_vector(31 downto 0);
          WE : INOUT  std_logic;
          Dataout : OUT std_logic_vector(31 downto 0)
@@ -52,7 +51,6 @@ ARCHITECTURE behavior OF single_register_tb IS
 
    --Inputs
    signal CLK : std_logic := '0';
-   signal RST : std_logic := '0';
 	--signal WE : std_logic := '0';
    signal Datain : std_logic_vector(31 downto 0) := (others => '0');
 
@@ -68,7 +66,6 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: single_register PORT MAP (
           CLK => CLK,
-          RST => RST,
           Datain => Datain,
           WE => WE,
           Dataout => Dataout
@@ -87,14 +84,12 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 100 ns.
       wait for 10 ns;
 
-		RST <= '1';	
 		WE <= '0';
-
       wait for CLK_period*3;
-		RST <= '0';
+		
+
       -- insert stimulus here 
 		wait for 50 ns;
 		-- make some data available for the register
@@ -102,7 +97,7 @@ BEGIN
 		wait for 50 ns;
 		
 		WE <= '1';  -- actually write the data in the register
-		wait for 10 ns;
+		wait for 50 ns;
 		WE <= '0';
 		
 		wait for 100 ns; -- acutally remember the data for 100 ns
@@ -110,7 +105,7 @@ BEGIN
 		-- Write some new data
 		Datain <= x"feae9385";
 		WE <= '1';
-		wait for 10 ns;
+		wait for 50 ns;
 		WE <= '0';
 			
 		
