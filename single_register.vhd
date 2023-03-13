@@ -33,6 +33,6 @@ begin
 	end process;
 	
 	WE_in_temp <= WE;
-	Dataout <= Dataout_temp after 10 ns;  -- finally send the signal out with a 10 ns delay
+	Dataout <= Dataout_temp;  -- finally send the signal out with a 10 ns delay
 end Behavioral;
 

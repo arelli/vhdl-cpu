@@ -59,6 +59,6 @@ begin
 		end case;
 	end process;
 			
-Out_signals <= Out_signals_temp after 10 ns;
+Out_signals <= Out_signals_temp;
 end Behavioral;
 

@@ -115,10 +115,10 @@ begin
 
 	-- Create the logic of the output signals:
 	
-	Output <= output_wire after 10ns; -- Send the result to the output of the ALU
-	Cout <= cout_wire after 10 ns;
-	Ovf <= ovf_wire after 10ns;
-	Zero <= zero_flag_wire after 10ns;
+	Output <= output_wire; -- Send the result to the output of the ALU
+	Cout <= cout_wire;
+	Ovf <= ovf_wire;
+	Zero <= zero_flag_wire;
 	
 end Behavioral;
 
