@@ -35,13 +35,25 @@ architecture Behavioral of RegisterFile is
 	COMPONENT single_register is
     PORT(
          CLK : IN  std_logic;
-         RST : IN  std_logic;
+
          Datain : IN  std_logic_vector(31 downto 0);
          WE : INOUT  std_logic;
          Dataout : OUT std_logic_vector(31 downto 0)
         );
     END COMPONENT;
+
 	 
+	 COMPONENT Compare_Module is
+
+    Port ( Awr_comp : in  STD_LOGIC_VECTOR (4 downto 0);
+
+           Ard1_comp : in  STD_LOGIC_VECTOR (4 downto 0);
+
+           comp_out : out  STD_LOGIC);
+
+	end COMPONENT;
+
+	
 	 -- include also the decoder
 	 COMPONENT Decoder
     PORT(
@@ -50,6 +62,20 @@ architecture Behavioral of RegisterFile is
         );
     END COMPONENT;
 	 
+
+	 COMPONENT mux32_2_to_1 is
+
+    Port ( Select_in : in  STD_LOGIC;
+
+           Input0 : in  STD_LOGIC_VECTOR (31 downto 0);
+
+           Input1 : in  STD_LOGIC_VECTOR (31 downto 0);
+
+           mux_out : out  STD_LOGIC_VECTOR (31 downto 0));
+
+	end COMPONENT;
+
+	
 	 -- include the multiplexer as a compontent
 	 COMPONENT Multiplexer is
     PORT(
@@ -97,10 +123,21 @@ architecture Behavioral of RegisterFile is
 	 -- declare the internal signals
 	 signal internal_clock : STD_LOGIC;
 	 signal awr_signal : STD_LOGIC_VECTOR (4 downto 0);
+
+	 signal Ard1_tmp : STD_LOGIC_VECTOR (4 downto 0);
+
+	 signal Ard2_tmp : STD_LOGIC_VECTOR (4 downto 0);
 	 signal WE_internal : STD_LOGIC_VECTOR(31 downto 0);
 	 signal dec_out : STD_LOGIC_VECTOR(31 downto 0);
 	 signal dout1_internal: STD_LOGIC_VECTOR(31 downto 0);
 	 signal dout2_internal: STD_LOGIC_VECTOR(31 downto 0);
+
+	 signal dout1_new: STD_LOGIC_VECTOR(31 downto 0);
+	 signal dout2_new: STD_LOGIC_VECTOR(31 downto 0);
+
+	 signal mux_2_1_sel_1: STD_LOGIC;
+
+	 signal mux_2_1_sel_2: STD_LOGIC;
 
 begin
 
@@ -221,21 +258,66 @@ begin
 	registers : for i in 0 to 31 generate
 		reg:single_register port map(
 			Clk => internal_clock,
-			Rst => '0',  -- TODO: check if it is okay this way
 			WE => WE_internal(i),
 			Datain =>  Din,  -- every register has the same input bus, but different enable signals
 			Dataout => reg_to_mux(i)  -- this is a 32- bit bus. Check in the declaration above
 		);
 	end generate;
+	
 
+	comp_mod_1:Compare_Module port map(
+
+		Awr_comp => awr_signal,
+
+		Ard1_comp => Ard1_tmp,
+
+      comp_out => mux_2_1_sel_1
+
+	);
+
+	comp_mod_2:Compare_Module port map(
+
+		Awr_comp => awr_signal,
+
+		Ard1_comp => Ard2_tmp,
+
+      comp_out => mux_2_1_sel_2
+
+	);
+
+	MUX_2_1_1:mux32_2_to_1 port map(
+
+		Select_in => mux_2_1_sel_1,
+
+      Input0 => dout1_internal,
+
+      Input1 => dout2_internal,
+
+      mux_out => dout1_new
+
+	);
+
+	MUX_2_1_2:mux32_2_to_1 port map(
+
+		Select_in => mux_2_1_sel_2,
+
+      Input0 => dout2_internal,
+
+      Input1 => dout1_internal,
+
+      mux_out => dout2_new
+
+	);
 
 
 -- The "AND" gates of the WrEn signal are gonna be here. They are a combinatorial circuit.
 internal_clock <= Clk;  -- get the clock frrom outside the Register file to the clock line inside
 awr_signal <= Awr;
+Ard1_tmp <= Ard1;
 
-Dout1 <= dout1_internal;
-Dout2 <= dout2_internal;
+Ard2_tmp <= Ard2;
+Dout1 <= dout1_new;
+Dout2 <= dout2_new;
 
 --> Implement the combinatorial logic of the Write Enable 
 WE_internal(0) <= '0';  -- this is because the 0 Register in MIPS is traditinally, constantly zero.
