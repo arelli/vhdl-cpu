@@ -82,32 +82,32 @@ BEGIN
 		Din <= x"0f0f0f0f";  -- Write this value...
 		WrEn <='1';         -- ... after enabling us to do so... 
 		Awr <= "00001";  -- ... to the register No. 1
-		wait for Clk_period*4;
+		wait for Clk_period;
 		
 		Din <= x"eabeab00";  -- Write this value...
 		Awr <= "00011";  -- ... to the register No. 3
-		wait for Clk_period*4;
+		wait for Clk_period;
 		
 		Din <= x"baabbaab";  -- Write this value...
 		Awr <= "10001";  -- ... to the register No. 17
-		wait for Clk_period*4;
+		wait for Clk_period;
 				
 				
 		-- "remember" data on the registers
 		Din <= x"00000000";  -- this is not needed.
 		WrEn <= '0';  -- We stopped writing, so we dont need it Enabled anymore
-		wait for Clk_period*10;
+		wait for Clk_period*4;
 		
 		
 		-- Read from some registers
 		Ard1 <= "00001";  -- ... from register 1
-		wait for Clk_period*4;
+		wait for Clk_period;
 		
 		Ard1 <= "00011";  -- ... from register 3
-		wait for Clk_period*4;
+		wait for Clk_period;
 		
 		Ard2 <= "10001";  -- ... from register 17
-		wait for Clk_period*4;
+		wait for Clk_period;
 
       wait;
    end process;
