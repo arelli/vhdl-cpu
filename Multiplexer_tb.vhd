@@ -7,10 +7,10 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
-ENTITY Multiplexe_tb IS
-END Multiplexe_tb;
+ENTITY Multiplexer_tb IS
+END Multiplexer_tb;
  
-ARCHITECTURE behavior OF Multiplexe_tb IS 
+ARCHITECTURE behavior OF Multiplexer_tb IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
@@ -147,7 +147,7 @@ BEGIN
 		Input31 <= x"fefefefe";
 		
 		wait for 20 ns;
-		Select_in <= "00110";  -- Select Input5
+		Select_in <= "00101";  -- Select Input5
 		wait for 20ns;
 		Select_in <= "11111"; -- Select Input31
 		wait for 20 ns;
