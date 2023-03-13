@@ -73,8 +73,6 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 100 ns.
-      --wait for Clk_period*40;
 
       -- Write info to some registers
 		Din <= x"0f0f0f0f";  -- Write this value...
@@ -86,15 +84,16 @@ BEGIN
 		Awr <= "00011";  -- ... to the register No. 3
 		wait for Clk_period;
 		
+		Din <= x"12345678";  -- (Attempt to) Write this value...
+		Awr <= "00000";  -- ... to the register No. 0(ZERO!)
+		wait for Clk_period;
+		
 		Din <= x"baabbaab";  -- Write this value...
 		Awr <= "10001";  -- ... to the register No. 17
 		wait for Clk_period;
-				
-				
-		-- "remember" data on the registers
-		Din <= x"00000000";  -- this is not needed.
+		
 		WrEn <= '0';  -- We stopped writing, so we dont need it Enabled anymore
-		wait for Clk_period*4;
+		wait for Clk_period;
 		
 		
 		-- Read from some registers
@@ -105,6 +104,9 @@ BEGIN
 		wait for Clk_period;
 		
 		Ard2 <= "10001";  -- ... from register 17
+		wait for Clk_period;
+		
+		Ard2 <= "00000";  -- ... from ZERO register!(must always be zero)
 		wait for Clk_period;
 
       wait;
