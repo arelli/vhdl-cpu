@@ -25,8 +25,7 @@ ARCHITECTURE behavior OF RegisterFile_tb IS
          Dout2 : OUT  std_logic_vector(31 downto 0);
          Din : IN  std_logic_vector(31 downto 0);
          WrEn : IN  std_logic;
-         Clk : IN  std_logic;
-         Rst : IN  std_logic
+         Clk : IN  std_logic
         );
     END COMPONENT;
     
@@ -58,8 +57,7 @@ BEGIN
           Dout2 => Dout2,
           Din => Din,
           WrEn => WrEn,
-          Clk => Clk,
-          Rst => Rst
+          Clk => Clk
         );
 
    -- Clock process definitions

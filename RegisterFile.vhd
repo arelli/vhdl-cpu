@@ -19,15 +19,14 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity RegisterFile is
-    Port ( Ard1 : in  STD_LOGIC_VECTOR (4 downto 0);
+    Port ( Ard1 : in  STD_LOGIC_VECTOR (4 downto 0);  -- Address (to) read data 1
            Ard2 : in  STD_LOGIC_VECTOR (4 downto 0);
-           Awr : in  STD_LOGIC_VECTOR (4 downto 0);
-           Dout1 : out  STD_LOGIC_VECTOR (31 downto 0);
+           Awr : in  STD_LOGIC_VECTOR (4 downto 0);  -- Address (to) write data 
+           Dout1 : out  STD_LOGIC_VECTOR (31 downto 0);  -- Data output 1
            Dout2 : out  STD_LOGIC_VECTOR (31 downto 0);
-           Din : in  STD_LOGIC_VECTOR (31 downto 0);
-           WrEn : in  STD_LOGIC;
-           Clk : in  STD_LOGIC;
-           Rst : in  STD_LOGIC);
+           Din : in  STD_LOGIC_VECTOR (31 downto 0);  -- Data Input
+           WrEn : in  STD_LOGIC;  -- Write enable
+           Clk : in  STD_LOGIC);
 end RegisterFile;
 
 architecture Behavioral of RegisterFile is
@@ -35,7 +34,6 @@ architecture Behavioral of RegisterFile is
 	COMPONENT single_register is
     PORT(
          CLK : IN  std_logic;
-
          Datain : IN  std_logic_vector(31 downto 0);
          WE : INOUT  std_logic;
          Dataout : OUT std_logic_vector(31 downto 0)
@@ -121,19 +119,11 @@ architecture Behavioral of RegisterFile is
 	 signal reg_to_mux:reg_mux_bus;  -- this is a new type: an array that contains 32 buses of 32 bit each.
 	 
 	 -- declare the internal signals
-	 signal internal_clock : STD_LOGIC;
-	 signal awr_signal : STD_LOGIC_VECTOR (4 downto 0);
 
-	 signal Ard1_tmp : STD_LOGIC_VECTOR (4 downto 0);
-
-	 signal Ard2_tmp : STD_LOGIC_VECTOR (4 downto 0);
 	 signal WE_internal : STD_LOGIC_VECTOR(31 downto 0);
 	 signal dec_out : STD_LOGIC_VECTOR(31 downto 0);
 	 signal dout1_internal: STD_LOGIC_VECTOR(31 downto 0);
 	 signal dout2_internal: STD_LOGIC_VECTOR(31 downto 0);
-
-	 signal dout1_new: STD_LOGIC_VECTOR(31 downto 0);
-	 signal dout2_new: STD_LOGIC_VECTOR(31 downto 0);
 
 	 signal mux_2_1_sel_1: STD_LOGIC;
 
@@ -145,7 +135,7 @@ begin
 	-- here we assign each "internal" pin of the decoder, to the
 	-- rest of the Register File circuit
 	decoder_component:Decoder port map(
-		Awr => awr_signal,
+		Awr => Awr,
 		Out_signals(0) => dec_out(0),
 		Out_signals(1) => dec_out(1),
 		Out_signals(2) => dec_out(2),
@@ -257,7 +247,7 @@ begin
 	-- Generate all 32 registers in one statement with for-generate
 	registers : for i in 0 to 31 generate
 		reg:single_register port map(
-			Clk => internal_clock,
+			Clk => Clk,
 			WE => WE_internal(i),
 			Datain =>  Din,  -- every register has the same input bus, but different enable signals
 			Dataout => reg_to_mux(i)  -- this is a 32- bit bus. Check in the declaration above
@@ -266,92 +256,66 @@ begin
 	
 
 	comp_mod_1:Compare_Module port map(
-
-		Awr_comp => awr_signal,
-
-		Ard1_comp => Ard1_tmp,
-
+		Awr_comp => Awr,
+		Ard1_comp => Ard1,
       comp_out => mux_2_1_sel_1
-
 	);
 
 	comp_mod_2:Compare_Module port map(
-
-		Awr_comp => awr_signal,
-
-		Ard1_comp => Ard2_tmp,
-
+		Awr_comp => Awr,
+		Ard1_comp => Ard2,
       comp_out => mux_2_1_sel_2
-
 	);
 
 	MUX_2_1_1:mux32_2_to_1 port map(
-
 		Select_in => mux_2_1_sel_1,
-
       Input0 => dout1_internal,
-
-      Input1 => dout2_internal,
-
-      mux_out => dout1_new
-
+      Input1 => Din,
+      mux_out => Dout1
 	);
 
 	MUX_2_1_2:mux32_2_to_1 port map(
-
 		Select_in => mux_2_1_sel_2,
-
       Input0 => dout2_internal,
-
-      Input1 => dout1_internal,
-
-      mux_out => dout2_new
-
+      Input1 => Din,
+      mux_out => Dout2
 	);
 
 
 -- The "AND" gates of the WrEn signal are gonna be here. They are a combinatorial circuit.
-internal_clock <= Clk;  -- get the clock frrom outside the Register file to the clock line inside
-awr_signal <= Awr;
-Ard1_tmp <= Ard1;
-
-Ard2_tmp <= Ard2;
-Dout1 <= dout1_new;
-Dout2 <= dout2_new;
-
 --> Implement the combinatorial logic of the Write Enable 
 WE_internal(0) <= '0';  -- this is because the 0 Register in MIPS is traditinally, constantly zero.
-WE_internal(1) <= (dec_out(1) and WrEn) after 2ns;
-WE_internal(2) <= (dec_out(2) and WrEn) after 2ns;
-WE_internal(3) <= (dec_out(3) and WrEn) after 2ns;
-WE_internal(4) <= (dec_out(4) and WrEn) after 2ns;
-WE_internal(5) <= (dec_out(5) and WrEn) after 2ns;
-WE_internal(6) <= (dec_out(6) and WrEn) after 2ns;
-WE_internal(7) <= (dec_out(7) and WrEn) after 2ns;
-WE_internal(8) <= (dec_out(8) and WrEn) after 2ns;
-WE_internal(9) <= (dec_out(9) and WrEn) after 2ns;
-WE_internal(10) <= (dec_out(10) and WrEn) after 2ns;
-WE_internal(11) <= (dec_out(11) and WrEn) after 2ns;
-WE_internal(12) <= (dec_out(12) and WrEn) after 2ns;
-WE_internal(13) <= (dec_out(13) and WrEn) after 2ns;
-WE_internal(14) <= (dec_out(14) and WrEn) after 2ns;
-WE_internal(15) <= (dec_out(15) and WrEn) after 2ns;
-WE_internal(16) <= (dec_out(16) and WrEn) after 2ns;
-WE_internal(17) <= (dec_out(17) and WrEn) after 2ns;
-WE_internal(18) <= (dec_out(18) and WrEn) after 2ns;
-WE_internal(19) <= (dec_out(19) and WrEn) after 2ns;
-WE_internal(20) <= (dec_out(20) and WrEn) after 2ns;
-WE_internal(21) <= (dec_out(21) and WrEn) after 2ns;
-WE_internal(22) <= (dec_out(22) and WrEn) after 2ns;
-WE_internal(23) <= (dec_out(23) and WrEn) after 2ns;
-WE_internal(24) <= (dec_out(24) and WrEn) after 2ns;
-WE_internal(25) <= (dec_out(25) and WrEn) after 2ns;
-WE_internal(26) <= (dec_out(26) and WrEn) after 2ns;
-WE_internal(27) <= (dec_out(27) and WrEn) after 2ns;
-WE_internal(28) <= (dec_out(28) and WrEn) after 2ns;
-WE_internal(29) <= (dec_out(29) and WrEn) after 2ns;
-WE_internal(30) <= (dec_out(30) and WrEn) after 2ns;
-WE_internal(31) <= (dec_out(31) and WrEn) after 2ns;
+WE_internal(1) <= (dec_out(1) and WrEn);
+WE_internal(2) <= (dec_out(2) and WrEn);
+WE_internal(3) <= (dec_out(3) and WrEn);
+WE_internal(4) <= (dec_out(4) and WrEn);
+WE_internal(5) <= (dec_out(5) and WrEn);
+WE_internal(6) <= (dec_out(6) and WrEn);
+WE_internal(7) <= (dec_out(7) and WrEn);
+WE_internal(8) <= (dec_out(8) and WrEn);
+WE_internal(9) <= (dec_out(9) and WrEn);
+WE_internal(10) <= (dec_out(10) and WrEn);
+WE_internal(11) <= (dec_out(11) and WrEn);
+WE_internal(12) <= (dec_out(12) and WrEn);
+WE_internal(13) <= (dec_out(13) and WrEn);
+WE_internal(14) <= (dec_out(14) and WrEn);
+WE_internal(15) <= (dec_out(15) and WrEn);
+WE_internal(16) <= (dec_out(16) and WrEn);
+WE_internal(17) <= (dec_out(17) and WrEn);
+WE_internal(18) <= (dec_out(18) and WrEn);
+WE_internal(19) <= (dec_out(19) and WrEn);
+WE_internal(20) <= (dec_out(20) and WrEn);
+WE_internal(21) <= (dec_out(21) and WrEn);
+WE_internal(22) <= (dec_out(22) and WrEn);
+WE_internal(23) <= (dec_out(23) and WrEn);
+WE_internal(24) <= (dec_out(24) and WrEn);
+WE_internal(25) <= (dec_out(25) and WrEn);
+WE_internal(26) <= (dec_out(26) and WrEn);
+WE_internal(27) <= (dec_out(27) and WrEn);
+WE_internal(28) <= (dec_out(28) and WrEn);
+WE_internal(29) <= (dec_out(29) and WrEn);
+WE_internal(30) <= (dec_out(30) and WrEn);
+WE_internal(31) <= (dec_out(31) and WrEn);
 
 end Behavioral;
 
