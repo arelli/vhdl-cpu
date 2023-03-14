@@ -25,6 +25,7 @@ ARCHITECTURE behavior OF RegisterFile_tb IS
          Dout2 : OUT  std_logic_vector(31 downto 0);
          Din : IN  std_logic_vector(31 downto 0);
          WrEn : IN  std_logic;
+			RST : in  STD_LOGIC;
          Clk : IN  std_logic
         );
     END COMPONENT;
@@ -57,6 +58,7 @@ BEGIN
           Dout2 => Dout2,
           Din => Din,
           WrEn => WrEn,
+			 RST => Rst,
           Clk => Clk
         );
 
@@ -73,6 +75,10 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
+	
+		RST <= '1';
+		wait for 2*Clk_period;
+		RST <= '0';
 
       -- Write info to some registers
 		Din <= x"0f0f0f0f";  -- Write this value...

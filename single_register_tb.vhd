@@ -42,6 +42,7 @@ ARCHITECTURE behavior OF single_register_tb IS
     COMPONENT single_register
     PORT(
          CLK : IN  std_logic;
+			RST : in  STD_LOGIC;
          Datain : IN  std_logic_vector(31 downto 0);
          WE : INOUT  std_logic;
          Dataout : OUT std_logic_vector(31 downto 0)
@@ -51,6 +52,7 @@ ARCHITECTURE behavior OF single_register_tb IS
 
    --Inputs
    signal CLK : std_logic := '0';
+	signal RST :  STD_LOGIC := '0' ;
 	--signal WE : std_logic := '0';
    signal Datain : std_logic_vector(31 downto 0) := (others => '0');
 
@@ -66,6 +68,7 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: single_register PORT MAP (
           CLK => CLK,
+			 RST => RST,
           Datain => Datain,
           WE => WE,
           Dataout => Dataout
@@ -84,8 +87,11 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
+		
+		Rst<= '1';
       wait for 10 ns;
 
+		Rst <= '0';
 		WE <= '0';
       wait for CLK_period*3;
 		

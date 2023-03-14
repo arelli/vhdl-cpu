@@ -10,6 +10,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity single_register is  -- A 32-bit Register
     Port ( CLK : in  STD_LOGIC;  -- clock
+           RST : in  STD_LOGIC;  -- reset registero to 0
            Datain : in  STD_LOGIC_VECTOR (31 downto 0); -- input bus
            WE : in  STD_LOGIC;  -- Write Enable(inout means a bidirectional bus, able to check its value internally without intermediate signal/buffer)
            Dataout : out  STD_LOGIC_VECTOR (31 downto 0));  --Data output bus
@@ -24,11 +25,15 @@ begin
 	process(CLK)  --  we want changes to (potentially) happen only when the CLK  signal changes
 	begin
 		if rising_edge(CLK) then  -- rising_edge
-			if (WE_in_temp='1') then
-				Dataout_temp <= Datain;  -- write new data to the register
+			if (RST='1') then
+				Dataout_temp <= x"00000000";
 			else
-				Dataout_temp <= Dataout_temp;  -- important! This is the "latch", that stores the value
-			end if;				
+				if (WE_in_temp='1') then
+					Dataout_temp <= Datain;  -- write new data to the register
+				else
+					Dataout_temp <= Dataout_temp;  -- important! This is the "latch", that stores the value
+				end if;				
+			end if;
 		end if;
 	end process;
 	

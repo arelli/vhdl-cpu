@@ -26,6 +26,7 @@ entity RegisterFile is
            Dout2 : out  STD_LOGIC_VECTOR (31 downto 0);
            Din : in  STD_LOGIC_VECTOR (31 downto 0);  -- Data Input
            WrEn : in  STD_LOGIC;  -- Write enable
+			  Rst : in STD_LOGIC;
            Clk : in  STD_LOGIC);
 end RegisterFile;
 
@@ -34,6 +35,7 @@ architecture Behavioral of RegisterFile is
 	COMPONENT single_register is
     PORT(
          CLK : IN  std_logic;
+			RST : in  STD_LOGIC;
          Datain : IN  std_logic_vector(31 downto 0);
          WE : INOUT  std_logic;
          Dataout : OUT std_logic_vector(31 downto 0)
@@ -248,6 +250,7 @@ begin
 	registers : for i in 0 to 31 generate
 		reg:single_register port map(
 			Clk => Clk,
+			Rst => Rst,
 			WE => WE_internal(i),
 			Datain =>  Din,  -- every register has the same input bus, but different enable signals
 			Dataout => reg_to_mux(i)  -- this is a 32- bit bus. Check in the declaration above
