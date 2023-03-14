@@ -172,7 +172,7 @@ begin
 	
 	muxer1 :Multiplexer port map(
 		Out_signal => dout1_internal,
-		Input0 => reg_to_mux(0),
+		Input0 => x"00000000",  -- Zero Register!
 		Input1 => reg_to_mux(1),
 		Input2 => reg_to_mux(2),
 		Input3 => reg_to_mux(3),
@@ -209,7 +209,7 @@ begin
 	
 	muxer2:Multiplexer port map(
 		Out_signal => dout2_internal,
-		Input0 => reg_to_mux(0),
+		Input0 => x"00000000",  -- Zero Register!
 		Input1 => reg_to_mux(1),
 		Input2 => reg_to_mux(2),
 		Input3 => reg_to_mux(3),
