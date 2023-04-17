@@ -20,15 +20,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
 entity mux32_2_to_1 is
     Port ( Select_in : in  STD_LOGIC;
            Input0 : in  STD_LOGIC_VECTOR (31 downto 0);
@@ -50,6 +41,6 @@ begin
 			when others => out_signal_temp <= x"00000000"; -- in any other case, the output will be 0
 		end case;
 	end process;
-	mux_out <= out_signal_temp; --after 10 ns;
+	mux_out <= out_signal_temp;
 end Behavioral;
 
