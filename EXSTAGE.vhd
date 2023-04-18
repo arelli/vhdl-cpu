@@ -35,15 +35,13 @@ entity EXSTAGE is
            Immed : in  STD_LOGIC_VECTOR (31 downto 0);
            ALU_Bin_sel : in  STD_LOGIC;
            ALU_func : in  STD_LOGIC_VECTOR (3 downto 0);
-           ALU_out : out  STD_LOGIC_VECTOR (31 downto 0);
-           ALU_zero : out  STD_LOGIC);
+           ALU_out : out  STD_LOGIC_VECTOR (31 downto 0));
 end EXSTAGE;
 
 architecture Behavioral of EXSTAGE is
 
 signal reg2_muxed : std_logic_vector (31 downto 0);
 signal alu_out_tmp : std_logic_vector (31 downto 0);
-signal zero_tmp : std_logic;
 
 Component mux32_2_to_1 is
     Port ( Select_in : in  STD_LOGIC;
@@ -75,11 +73,11 @@ ex_alu : ALU PORT MAP (
 				B=>reg2_muxed,
 				Op=>ALU_func,
 				Output=>alu_out_tmp,
-				Zero=>zero_tmp,
+				Zero=>open,
 				Cout=>open,
 				Ovf=>open
 			);
-ALU_zero<=zero_tmp;
+
 ALU_out<=alu_out_tmp;
 
 end Behavioral;
