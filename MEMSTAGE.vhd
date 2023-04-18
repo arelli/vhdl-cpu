@@ -1,33 +1,5 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    00:04:23 03/27/2023 
--- Design Name: 
--- Module Name:    MEMSTAGE - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity MEMSTAGE is
     Port ( clk : in  STD_LOGIC;
@@ -60,7 +32,7 @@ Mem_WrEn_tmp(0)<=Mem_WrEn;
 Mem_Unit_RAM: MemoryRAM Port map(
 		clka=>clk,
 		wea=>Mem_WrEn_tmp,
-		addra=>ALU_MEM_Addr(9 downto 0),  --  slice the bus to its last 10 bytes(we only ave 1024 memory addresses)
+		addra=>ALU_MEM_Addr(11 downto 2),  --  slice the bus to its last 10 bytes(we only ave 1024 memory addresses)
 		dina=>MEM_DataIn,
 		douta=>MEM_DataOut_tmp
 	);

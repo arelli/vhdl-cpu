@@ -74,7 +74,7 @@ ifstg_internal: IFSTAGE Port map(
 Mem_Unit: Memory2 Port map(
 		clka=>Clk,
 		wea=>(others => '0'),
-		addra=>Instr_tmp(11 downto 2),  -- ignore the first two bits
+		addra=>Instr_tmp(11 downto 2),  -- ignore the first two bits(we increment PC by 4!!)
 		dina=>(others => '0'),
 		douta=>Instr_out
 	);
