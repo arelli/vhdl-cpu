@@ -42,16 +42,6 @@ architecture Behavioral of mux2to1_5bit is
 signal temp_out : STD_LOGIC_VECTOR(4 downto 0);
 
 begin
-mux_proc: process (mux0,mux1,temp_out)
-begin
-	CASE sel IS
-		WHEN '0'=>	temp_out<=mux0;
-		WHEN '1'=>	temp_out<=mux1;
-		WHEN others => temp_out <= "00000"; -- in any other case, the output will be 0
-	END CASE;
-	
-	end process;
-	mux_out<=temp_out;
-
+mux_out <= mux1 when (sel = '1') else mux0;
 end Behavioral;
 

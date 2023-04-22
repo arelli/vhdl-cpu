@@ -1,33 +1,7 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    14:28:01 04/09/2022 
--- Design Name: 
--- Module Name:    EXSTAGE - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity EXSTAGE is
     Port ( RF_A : in  STD_LOGIC_VECTOR (31 downto 0);
@@ -35,13 +9,15 @@ entity EXSTAGE is
            Immed : in  STD_LOGIC_VECTOR (31 downto 0);
            ALU_Bin_sel : in  STD_LOGIC;
            ALU_func : in  STD_LOGIC_VECTOR (3 downto 0);
-           ALU_out : out  STD_LOGIC_VECTOR (31 downto 0));
+           ALU_out : out  STD_LOGIC_VECTOR (31 downto 0);
+			  ALU_zero: out  STD_LOGIC );
 end EXSTAGE;
 
 architecture Behavioral of EXSTAGE is
 
 signal reg2_muxed : std_logic_vector (31 downto 0);
 signal alu_out_tmp : std_logic_vector (31 downto 0);
+signal ALU_zero_tmp :STD_LOGIC;
 
 Component mux32_2_to_1 is
     Port ( Select_in : in  STD_LOGIC;
@@ -73,12 +49,13 @@ ex_alu : ALU PORT MAP (
 				B=>reg2_muxed,
 				Op=>ALU_func,
 				Output=>alu_out_tmp,
-				Zero=>open,
+				Zero=>ALU_zero_tmp,
 				Cout=>open,
 				Ovf=>open
 			);
 
 ALU_out<=alu_out_tmp;
+ALU_Zero <= ALU_zero_tmp;
 
 end Behavioral;
 

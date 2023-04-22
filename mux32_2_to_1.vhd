@@ -32,15 +32,6 @@ architecture Behavioral of mux32_2_to_1 is
 signal out_signal_temp : STD_LOGIC_VECTOR (31 downto 0);
 
 begin
-	process(Select_in, Input0, Input1)  -- the process is "run" otan we have a change in the value of Select_in
-	begin
-
-		case Select_in is
-			when '0' => out_signal_temp <= Input0;
-			when '1' => out_signal_temp <= Input1;
-			when others => out_signal_temp <= x"00000000"; -- in any other case, the output will be 0
-		end case;
-	end process;
-	mux_out <= out_signal_temp;
+	mux_out<= Input1 when (Select_in = '1') else Input0;
 end Behavioral;
 
