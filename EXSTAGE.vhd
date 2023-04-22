@@ -48,7 +48,7 @@ ex_alu : ALU PORT MAP (
 				A=>RF_A,
 				B=>reg2_muxed,
 				Op=>ALU_func,
-				Output=>alu_out_tmp,
+				Output=>alu_out_tmp, 
 				Zero=>ALU_zero_tmp,
 				Cout=>open,
 				Ovf=>open

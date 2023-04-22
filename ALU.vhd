@@ -49,11 +49,11 @@ begin
 			-- Arithmetic Addition
 			when "0000" => output_wire <= A+B;
 			-- Arithmetic Subtraction
-			when "0001" => output_wire <= A-B;
+			when "0001" => output_wire <= std_logic_vector(signed(A)-signed(B));
 			-- Logical AND
-			when "0010" => output_wire <= A and B;  -- logical operators in VHDL are called by their name
+			when "0010" => output_wire <= std_logic_vector(signed(A) and signed(B));  -- logical operators in VHDL are called by their name
 			-- Logical OR
-			when "0011" => output_wire <= A or B;
+			when "0011" => output_wire <= std_logic_vector(signed(A) or signed(B));
 			-- Inversion of A
 			when "0100" => output_wire <= not A;
 			-- Numerical shift Right
@@ -121,4 +121,12 @@ begin
 	Zero <= zero_flag_wire;
 	
 end Behavioral;
+
+
+
+
+
+
+
+
 

@@ -35,7 +35,7 @@ signal ByteOp_tmp : STD_LOGIC;
 begin
 OpCode<=Instr(31 downto 26);
 Func<=Instr(3 downto 0);
-process(Instr,ALU_Zero)
+process(OpCode,ALU_Zero,Func)
 	begin
 	case OpCode is
 		when "100000" => 	-- ALL ALU two-register operations
@@ -110,25 +110,23 @@ process(Instr,ALU_Zero)
 			ByteOp_tmp<='0';
 		when "010000" =>	--branch equal
 			PC_LdEn_tmp<='1';
-			
 			RF_B_Sel_tmp<='1';  -- subtract the two numbers...
 			RF_WrEn_tmp<='0';
 			RF_WrData_Sel_tmp<='0';
 			ALU_Bin_Sel_tmp<='0';
 			ALU_Func_tmp<="0001";
-			-- the following will only work if the RF and the ALU output
+			-- the following will only work if the RF and the ALU produce
 			-- their results BEFORE the clock edge!!(same for bne)
+
 			if(ALU_Zero='1') then  -- ...if they are equal...
 						PC_Sel_tmp <='1';  --... load the immediate into PC!
 					else
 						PC_Sel_tmp <='0';		
 					end if;
-			
 			MEM_WrEn_tmp<='0';
 			ByteOp_tmp<='0';
 		when "010001" =>	--branch not equal
-			PC_LdEn_tmp<='1';
-			
+			PC_LdEn_tmp<='1';			
 			RF_B_Sel_tmp<='1';  
 			RF_WrEn_tmp<='0';
 			RF_WrData_Sel_tmp<='0';
@@ -139,7 +137,6 @@ process(Instr,ALU_Zero)
 					else
 						PC_Sel_tmp <='0';		
 					end if;
-			
 			MEM_WrEn_tmp<='0';
 			ByteOp_tmp<='0';
 		when "000011" =>	--load byte

@@ -40,10 +40,6 @@ ARCHITECTURE behavior OF ALU_tb IS
    signal Zero : std_logic;
    signal Cout : std_logic;
    signal Ovf : std_logic;
-   -- No clocks detected in port list. Replace <clock> below with 
-   -- appropriate port name 
- 
-   --  --constant <clock>_period : time := 10 ns;
  
 BEGIN
  
@@ -61,7 +57,8 @@ BEGIN
 
    -- Stimulus process
    stim_proc: process
-   begin		
+   begin	
+		wait for 50ns;
 		-- Addition and Zero Flag
 		Op <= "0000";
 		A <=  x"00000000";
