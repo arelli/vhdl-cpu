@@ -1,22 +1,4 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    19:31:42 03/12/2023 
--- Design Name: 
--- Module Name:    mux32_2_to_1 - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
+-- this is a multiplexer that has two 32-bit buses as input. 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 

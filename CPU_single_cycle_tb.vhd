@@ -1,3 +1,6 @@
+-- This is the whole signle cycle MIPS-like CPU:
+-- It contains the instruction and user memory, the ALU, the registers
+-- and all the logic for them to work(Controller).
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
@@ -46,7 +49,7 @@ BEGIN
    begin		
       -- hold reset state for 100 ns.
 		Reset <= '1';
-      wait for Clock_period*5;
+      wait for Clock_period*2;
 		Reset<='0';
 
       -- insert stimulus here 

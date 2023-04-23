@@ -1,3 +1,9 @@
+-- This is the EXEC/ALU stage. It is responsible for all the arithmetic operations
+-- that happen inside the CPU.
+-- It is an ALU combined with a multiplexer to choose its second operand:
+-- this enables us to feed three buses to the ALU and decide on the second
+-- operand in control level. It is later used to decide between a value coming
+-- from the Register File and a value coming from the instruction as an immediate.
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 

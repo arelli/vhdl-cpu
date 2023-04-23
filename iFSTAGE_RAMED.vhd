@@ -1,36 +1,11 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    19:24:47 03/26/2023 
--- Design Name: 
--- Module Name:    iFSTAGE_RAMED - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
+-- This is the Instruction Fetch(IF) stage. It is responsible for fetching the 
+-- intructions from the IMEM(Instruction MEMory), one by one, and for executing
+-- jumps when branching instructions are encountered.
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
 entity IFSTAGE_RAMED is
-Port ( 		PC_Immed : in  STD_LOGIC_VECTOR (31 downto 0);
+Port ( 	  PC_Immed : in  STD_LOGIC_VECTOR (31 downto 0);  
            PC_sel : in  STD_LOGIC;
            PC_LdEn : in  STD_LOGIC;
            Reset : in  STD_LOGIC;

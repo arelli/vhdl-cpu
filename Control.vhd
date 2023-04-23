@@ -1,3 +1,9 @@
+-- This is the Control Module: the orchestrator of the whole Datapath, controls
+-- the ocntrol signals that are used as input for the datapath: for example, 
+-- when we need to do an lw (load word), we need to tell the RF its ok to 
+-- write to it(RF_Write_En) and where those data will come from(RF_DataSel).
+-- So it is a black box that receives an Instruction(from IF) and outputs
+-- the respective control signals for the datapath to work. 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -114,7 +120,7 @@ process(OpCode,ALU_Zero,Func)
 			RF_WrEn_tmp<='0';
 			RF_WrData_Sel_tmp<='0';
 			ALU_Bin_Sel_tmp<='0';
-			ALU_Func_tmp<="0001";
+			ALU_Func_tmp<="0001";  -- subtraction!(to check if equal)
 			-- the following will only work if the RF and the ALU produce
 			-- their results BEFORE the clock edge!!(same for bne)
 
@@ -179,18 +185,18 @@ process(OpCode,ALU_Zero,Func)
 			ALU_Func_tmp<="0000";
 			MEM_WrEn_tmp<='1';
 			ByteOp_tmp<='0';
-		when "000000"=>	-- Consider it as nop and proceed to next IF Instruction
-			PC_LdEn_tmp<='1';
-			PC_Sel_tmp<='0';
-			RF_B_Sel_tmp<='0';
-			RF_WrEn_tmp<='0';
-			RF_WrData_Sel_tmp<='0';
-			ALU_Bin_Sel_tmp<='0';
-			ALU_Func_tmp<="0000";
-			MEM_WrEn_tmp<='0';
-			ByteOp_tmp<='0';
+--		when "000000"=>	-- Consider it as nop and proceed to next IF Instruction
+--			PC_LdEn_tmp<='1';
+--			PC_Sel_tmp<='0';
+--			RF_B_Sel_tmp<='0';
+--			RF_WrEn_tmp<='0';
+--			RF_WrData_Sel_tmp<='0';
+--			ALU_Bin_Sel_tmp<='0';
+--			ALU_Func_tmp<="0000";
+--			MEM_WrEn_tmp<='0';
+--			ByteOp_tmp<='0';
 		when others =>	
-			PC_LdEn_tmp<='0';
+			PC_LdEn_tmp<='1';
 			PC_Sel_tmp<='0';
 			RF_B_Sel_tmp<='0';
 			RF_WrEn_tmp<='0';

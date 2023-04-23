@@ -1,20 +1,6 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    18:15:24 04/10/2022 
--- Design Name: 
--- Module Name:    RegisterFile - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
-----------------------------------------------------------------------------------
+-- This is the regiter file. This is essentially the "fast" memory of the CPU:
+-- all the 32 registers are in here, and they are used only from user-written
+-- code for operations and storage. 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 

@@ -1,3 +1,5 @@
+-- The instruction Fetch module, without the memory. This means that it outputs
+-- raw memory addresses, from which the wrapper stage will get its instructions.
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 

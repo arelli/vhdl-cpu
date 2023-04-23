@@ -1,3 +1,6 @@
+-- This is a module that could have been implemented inside the Control Module:
+-- it takes the Immediate given to it and, depending on the instruction, formats 
+-- it a different way. See ISA for details. 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;

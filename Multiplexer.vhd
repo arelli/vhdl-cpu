@@ -61,44 +61,41 @@ architecture Behavioral of Multiplexer is
 signal out_signal_temp : STD_LOGIC_VECTOR (31 downto 0);
 
 begin
-	process(Select_in)  -- the process is "run" otan we have a change in the value of Select_in
-	begin
-		case Select_in is
-			when "00000" => out_signal_temp <= Input0;
-			when "00001" => out_signal_temp <= Input1;
-			when "00010" => out_signal_temp <= Input2;
-			when "00011" => out_signal_temp <= Input3;
-			when "00100" => out_signal_temp <= Input4;
-			when "00101" => out_signal_temp <= Input5;
-			when "00110" => out_signal_temp <= Input6;
-			when "00111" => out_signal_temp <= Input7;
-			when "01000" => out_signal_temp <= Input8;
-			when "01001" => out_signal_temp <= Input9;
-			when "01010" => out_signal_temp <= Input10;
-			when "01011" => out_signal_temp <= Input11;
-			when "01100" => out_signal_temp <= Input12;
-			when "01101" => out_signal_temp <= Input13;
-			when "01110" => out_signal_temp <= Input14;
-			when "01111" => out_signal_temp <= Input15;
-			when "10000" => out_signal_temp <= Input16;
-			when "10001" => out_signal_temp <= Input17;
-			when "10010" => out_signal_temp <= Input18;
-			when "10011" => out_signal_temp <= Input19;
-			when "10100" => out_signal_temp <= Input20;
-			when "10101" => out_signal_temp <= Input21;
-			when "10110" => out_signal_temp <= Input22;
-			when "10111" => out_signal_temp <= Input23;
-			when "11000" => out_signal_temp <= Input24;
-			when "11001" => out_signal_temp <= Input25;
-			when "11010" => out_signal_temp <= Input26;
-			when "11011" => out_signal_temp <= Input27;
-			when "11100" => out_signal_temp <= Input28;
-			when "11101" => out_signal_temp <= Input29;
-			when "11110" => out_signal_temp <= Input30;
-			when "11111" => out_signal_temp <= Input31;
-			when others => out_signal_temp <= x"00000000"; -- in any other case, the output will be 0
-		end case;
-	end process;
+
+    with Select_in select
+    out_signal_temp <= Input0 when "00000",
+         Input1 when "00001",
+         Input2 when "00010",
+         Input3 when "00011",
+         Input4 when "00100",
+         Input5 when "00101",
+         Input6 when "00110",
+         Input7 when "00111",
+         Input8 when "01000",
+         Input9 when "01001",
+         Input10 when "01010",
+         Input11 when "01011",
+         Input12 when "01100",
+         Input13 when "01101",
+         Input14 when "01110",
+         Input15 when "01111",
+         Input16 when "10000",
+         Input17 when "10001",
+         Input18 when "10010",
+         Input19 when "10011",
+         Input20 when "10100",
+         Input21 when "10101",
+         Input22 when "10110",
+         Input23 when "10111",
+         Input24 when "11000",
+         Input25 when "11001",
+         Input26 when "11010",
+         Input27 when "11011",
+         Input28 when "11100",
+         Input29 when "11101",
+         Input30 when "11110",
+         Input31 when "11111",
+         x"00000000"  when others;
 
 Out_signal <= out_signal_temp;
 end Behavioral;

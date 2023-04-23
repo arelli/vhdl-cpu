@@ -1,8 +1,9 @@
+-- This is the brains of the CPU: all information is processed here, as it ocntains the 
+-- Memories, the ALU, the Registers and their respective modules. But in order for all 
+-- of them to work together, they need some control inputs, hence all the "in" signals.
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
-
 
 entity Datapath is
     Port ( Clk : in  STD_LOGIC;
