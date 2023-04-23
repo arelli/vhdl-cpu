@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="/home/ise/Project_2023/CPU_2023_no_control/CPU_single_cycle_tb_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="/home/ise/Project_2023/CPU_2023/CPU_single_cycle_tb_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="cpu_single_cycle_tb" />
             <top_module name="numeric_std" />
@@ -16,7 +16,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="30" />
+   <WVObjectSize size="27" />
    <wvobject fp_name="/cpu_single_cycle_tb/reset" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">reset</obj_property>
       <obj_property name="ObjectShortName">reset</obj_property>
@@ -64,20 +64,6 @@
       <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="CustomSignalColor">#ffff00</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_single_cycle_tb/uut/cpu_datapath/exstg/alu_zero" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">alu_zero</obj_property>
-      <obj_property name="ObjectShortName">alu_zero</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_single_cycle_tb/uut/cpu_datapath/exstg/ex_alu/zero_flag_wire" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">zero_flag_wire</obj_property>
-      <obj_property name="ObjectShortName">zero_flag_wire</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_single_cycle_tb/uut/controler/alu_zero" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">alu_zero</obj_property>
-      <obj_property name="ObjectShortName">alu_zero</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="CustomSignalColor">#c0c0c0</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_single_cycle_tb/uut/cpu_datapath/memstg/mem_dataout" type="array" db_ref_id="1">
       <obj_property name="DisplayName">label</obj_property>
@@ -190,14 +176,14 @@
    <wvobject fp_name="/cpu_single_cycle_tb/uut/cpu_datapath/exstg/ex_alu/a" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">a[31:0]</obj_property>
       <obj_property name="ObjectShortName">a[31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="CustomSignalColor">#808000</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_single_cycle_tb/uut/cpu_datapath/exstg/ex_alu/b" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">b[31:0]</obj_property>
       <obj_property name="ObjectShortName">b[31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="CustomSignalColor">#808000</obj_property>
    </wvobject>
@@ -206,12 +192,14 @@
       <obj_property name="ObjectShortName">op[3:0]</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="CustomSignalColor">#808000</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_single_cycle_tb/uut/cpu_datapath/exstg/ex_alu/output" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">output[31:0]</obj_property>
       <obj_property name="ObjectShortName">output[31:0]</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="CustomSignalColor">#808000</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_single_cycle_tb/uut/cpu_datapath/exstg/ex_alu/zero" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">zero</obj_property>
@@ -236,11 +224,13 @@
       <obj_property name="ObjectShortName">output_wire[31:0]</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="CustomSignalColor">#808000</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_single_cycle_tb/uut/cpu_datapath/exstg/ex_alu/output_wire_33_bits" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">output_wire_33_bits[32:0]</obj_property>
       <obj_property name="ObjectShortName">output_wire_33_bits[32:0]</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="CustomSignalColor">#808000</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

@@ -257,14 +257,14 @@ begin
 	);
 
 	MUX_2_1_1:mux32_2_to_1 port map(
-		Select_in => mux_2_1_sel_1,
+		Select_in => '0',
       Input0 => dout1_internal,
       Input1 => Din,
       mux_out => Dout1
 	);
 
 	MUX_2_1_2:mux32_2_to_1 port map(
-		Select_in => mux_2_1_sel_2,
+		Select_in => '0',
       Input0 => dout2_internal,
       Input1 => Din,
       mux_out => Dout2

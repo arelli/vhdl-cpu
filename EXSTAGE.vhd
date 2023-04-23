@@ -54,13 +54,13 @@ ex_alu : ALU PORT MAP (
 				A=>RF_A,
 				B=>reg2_muxed,
 				Op=>ALU_func,
-				Output=>alu_out_tmp, 
+				Output=>ALU_out, 
 				Zero=>ALU_zero_tmp,
 				Cout=>open,
 				Ovf=>open
 			);
 
-ALU_out<=alu_out_tmp;
+--ALU_out<=alu_out_tmp;
 ALU_Zero <= ALU_zero_tmp;
 
 end Behavioral;
